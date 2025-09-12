@@ -1,0 +1,26 @@
+#desktop_requirements
+
+# GUI 프레임워크
+PyQt5==5.15.10
+
+# 웹 크롤링
+requests==2.31.0
+beautifulsoup4==4.12.2
+
+# 브라우저 자동화 (네이버 블로그)
+playwright==1.40.0
+
+# Firebase/Firestore
+firebase-admin==6.3.0
+google-cloud-firestore==2.13.1
+
+# HTTP 클라이언트 (Cloud Run API 연동)
+httpx==0.25.2
+
+# 데이터 처리
+python-dotenv==1.0.0
+python-dateutil==2.8.2
+
+# exe 패키징용
+pyinstaller==6.2.0
+
