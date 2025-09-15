@@ -1,5 +1,4 @@
 # YTN 뉴스 자동화 시스템 - Server Requirements
-# 트리플송 채용과제 - Cloud Run 배포용
 
 # ========== FastAPI Framework ==========
 fastapi==0.104.1
