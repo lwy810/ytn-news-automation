@@ -1,26 +1,38 @@
-#desktop_requirements
+# YTN 뉴스 자동화 시스템 - Desktop App Requirements
 
-# GUI 프레임워크
-PyQt5==5.15.10
+# ========== GUI Framework ==========
+PyQt5==5.15.9
+pyqt5-tools==5.15.9.3.3
 
-# 웹 크롤링
-requests==2.31.0
-beautifulsoup4==4.12.2
-
-# 브라우저 자동화 (네이버 블로그)
-playwright==1.40.0
-
-# Firebase/Firestore
-firebase-admin==6.3.0
+# ========== Firebase/Firestore ==========
+firebase-admin==6.4.0
 google-cloud-firestore==2.13.1
 
-# HTTP 클라이언트 (Cloud Run API 연동)
+# ========== Web Scraping ==========
+requests==2.31.0
+beautifulsoup4==4.12.2
+lxml==4.9.3
+urllib3==2.0.7
+
+# ========== Browser Automation ==========
+playwright==1.40.0
+selenium==4.15.2
+
+# ========== HTTP Client ==========
 httpx==0.25.2
 
-# 데이터 처리
-python-dotenv==1.0.0
+# ========== Data Processing ==========
+pandas==2.1.4
 python-dateutil==2.8.2
 
-# exe 패키징용
-pyinstaller==6.2.0
+# ========== Utilities ==========
+python-dotenv==1.0.0
 
+# ========== Packaging (exe 생성용) ==========
+pyinstaller==6.3.0
+auto-py-to-exe==2.42.0
+
+# ========== Development ==========
+black==23.11.0
+isort==5.12.0
+flake8==6.1.0
