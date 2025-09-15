@@ -1,0 +1,47 @@
+# YTN 뉴스 자동화 시스템 - Server Requirements
+# 트리플송 채용과제 - Cloud Run 배포용
+
+# ========== FastAPI Framework ==========
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+gunicorn==21.2.0
+
+# ========== Firebase/Firestore ==========
+firebase-admin==6.4.0
+google-cloud-firestore==2.13.1
+
+# ========== Data Validation ==========
+pydantic==2.5.2
+pydantic[email]==2.5.2
+
+# ========== HTTP & Networking ==========
+requests==2.31.0
+httpx==0.25.2
+
+# ========== Web Scraping ==========
+beautifulsoup4==4.12.2
+lxml==4.9.3
+
+# ========== Browser Automation ==========
+playwright==1.40.0
+
+# ========== Date & Time ==========
+python-dateutil==2.8.2
+
+# ========== Environment ==========
+python-dotenv==1.0.0
+
+# ========== Monitoring & Logging ==========
+structlog==23.2.0
+sentry-sdk[fastapi]==1.38.0
+
+# ========== Cloud Run Specific ==========
+google-cloud-logging==3.8.0
+google-cloud-secret-manager==2.18.1
+
+# ========== Development ==========
+pytest==7.4.3
+pytest-asyncio==0.21.1
+black==23.11.0
+isort==5.12.0
+flake8==6.1.0
