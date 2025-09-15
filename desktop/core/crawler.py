@@ -25,6 +25,7 @@ class CrawlerThread(QThread) :
     crawling_finished = pyqtSignal(list)
 
     def __init__(self):
+        super().__init__()  # 이 줄을 추가해야 합니다
         self.target_count = 1  # 테스트용으로 줄임
         self.delay_range = (0.5, 1)  # 테스트용으로 줄임
         print("1 - 초기화 완료")    
@@ -52,6 +53,7 @@ class CrawlerThread(QThread) :
     def emit_progress(self, message):
         """진행상황 출력 (실제로는 시그널 emit)"""
         print(f"Progress: {message}")
+        self.progress_updated.emit(message)  # 이 줄 추가
 
     def crawl_ytn_news(self) -> List[Dict]:
         """YTN 뉴스 크롤링 메인 함수"""
@@ -75,11 +77,13 @@ class CrawlerThread(QThread) :
                 try:
                     print("11-1. 뉴스 처리 시작")
                     print(f'0. url : {url}')
-                    news_data = self.crawl_single_news(url)
+                    news_list = self.crawl_single_news(url)
                     print("20 - news 수집 완료") 
-                    print(f'21. news_data : {news_data}')
-                    if news_data:
-                        self.emit_progress(f"✅ '{len(news_data)}'개 수집 완료")
+                    print(f'21. news_list : {news_list}')
+
+                    if news_list:
+
+                        self.emit_progress(f"✅ '{len(news_list)}'개 수집 완료")
                 
                 except Exception as e:
                     print("11-2. 뉴스 처리 오류")
@@ -88,7 +92,7 @@ class CrawlerThread(QThread) :
 
                 time.sleep(random.uniform(*self.delay_range))
                 
-            self.emit_progress(f"🎉 크롤링 완료! 총 {len(news_data)}개 뉴스를 수집했습니다.")
+            self.emit_progress(f"🎉 크롤링 완료! 총 {len(news_list)}개 뉴스를 수집했습니다.")
             return news_list
             
         except Exception as e:
@@ -142,43 +146,43 @@ class CrawlerThread(QThread) :
             print(f'crawl_url : {url}')
             # 뉴스 정보 추출
 
-            news_datas = [
+            news_list = [
+                self.extract_category(url, soup),
                 self.extract_title(soup),
                 self.extract_content(soup),
-                self.extract_category(url, soup),
-                self.extract_published_date(soup),
                 self.extract_news_url(soup),
                 [False],
-                ['']
+                [''],
+                self.extract_published_date(soup)
             ]
-            print(f'news_datas[title] : {news_datas[0]}')
-            print(f'news_datas[content] : {news_datas[1]}')
-            print(f'news_datas[category] : {news_datas[2]}')
-            print(f'news_datas[published_date] : {news_datas[3]}')
-            print(f'news_datas[url] : {news_datas[4]}')
-
-            news_data = []
-
-            max_length = len(news_datas[0]) if news_datas[0] else 0
+            
+            print(f'news_list[category] : {news_list[0]}')
+            print(f'news_list[title] : {news_list[1]}')
+            print(f'news_list[content] : {news_list[2]}')
+            print(f'news_list[url] : {news_list[3]}')
+            print(f'news_list[published_date] : {news_list[6]}')
+            
+            final_news_list = []
+            max_length = len(news_list[0]) if news_list[0] else 0
 
             for i in range(max_length):
                 news = {
-                    'index': (i+1),
-                    'title': news_datas[0][i] if i < len(news_datas[0]) else '',
-                    'content': news_datas[1][i] if i < len(news_datas[1]) else '',
-                    'category': news_datas[2][i] if i < len(news_datas[2]) else '',
-                    'published_date': news_datas[3][i] if i < len(news_datas[3]) else '',
-                    'url': news_datas[4][i] if i < len(news_datas[4]) else '',
-                    'posted_to_blog': news_datas[5][i] if i < len(news_datas[5]) else False,
-                    'blog_url': news_datas[6][i] if i < len(news_datas[6]) else ''
+                    'no': '',
+                    'category': news_list[0][i] if i < len(news_list[0]) else '',
+                    'title': news_list[1][i] if i < len(news_list[1]) else '',
+                    'content': news_list[2][i] if i < len(news_list[2]) else '',
+                    'url': news_list[3][i] if i < len(news_list[3]) else '',
+                    'posted_to_blog': news_list[4][i] if i < len(news_list[4]) else False,
+                    'blog_url': news_list[5][i] if i < len(news_list[5]) else '',
+                    'published_date': news_list[6][i] if i < len(news_list[6]) else '',
                 }
-                news_data.append(news)
+                final_news_list.append(news)
 
-            print(f'news_data : {news_data}')
+            print(f'news_list : {final_news_list}')
 
             print("13. 개별 뉴스 크롤링 완료")
 
-            return news_data
+            return final_news_list
 
         except Exception as e:
             print(f"개별 뉴스 크롤링 오류 ({url}): {e}")
