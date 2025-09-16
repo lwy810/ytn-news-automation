@@ -3,7 +3,7 @@ Firestore 데이터베이스 관리자
 Firebase Admin SDK를 사용한 CRUD 작업
 """
 
-import os
+import sys, os
 import json
 from datetime import datetime
 from typing import List, Dict, Optional
@@ -62,13 +62,19 @@ class FirestoreManager:
             self.is_connected = False
     
     def _get_service_account_path(self):
-        """서비스 계정 키 파일 경로 반환"""
-        # 현재 파일 기준으로 프로젝트 루트 찾기
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        project_root = os.path.dirname(os.path.dirname(current_dir))
-        print(f'project_root : {project_root}')
-        return os.path.join(project_root, 'config', 'serviceAccountKey.json')
-    
+        if getattr(sys, 'frozen', False):
+        # exe 실행 시
+            base_path = sys._MEIPASS
+            return os.path.join(base_path, "config", "serviceAccountKey.json")
+
+        else :
+            """서비스 계정 키 파일 경로 반환"""
+            # 현재 파일 기준으로 프로젝트 루트 찾기
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            project_root = os.path.dirname(os.path.dirname(current_dir))
+            print(f'project_root : {project_root}')
+            return os.path.join(project_root, 'config', 'serviceAccountKey.json')
+        
     def _test_connection(self):
         """연결 테스트"""
         if not self.db:
