@@ -358,6 +358,14 @@ class CrawlerThread(QThread) :
         
         return cleaned_contents
 
+    async def get_status(self):
+        return {
+            'status': 'ready',
+            'service': 'crawler_thread',
+            'last_run': None,
+            'total_crawled': 0,
+            'success_rate': 1.0
+        }
 
 # 테스트 실행
 if __name__ == "__main__":
