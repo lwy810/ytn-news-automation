@@ -359,7 +359,6 @@ class MainWindow(QMainWindow):
             self.news_table.setItem(i, 2, QTableWidgetItem(news.get('content', '')))
             self.news_table.setItem(i, 3, QTableWidgetItem(news.get('url', '')))
             
-            
             # 블로그 포스팅 상태 표시
             posted_status = "✅ 완료" if news.get('posted_to_blog') else "❌ 대기"
             self.news_table.setItem(i, 4, QTableWidgetItem(posted_status))
@@ -376,7 +375,7 @@ class MainWindow(QMainWindow):
     
     def log_message(self, message):
         """로그 메시지 추가"""
-        timestamp = datetime.now().strftime('%H:%M:%S')
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         formatted_message = f"[{timestamp}] {message}"
         self.log_text.append(formatted_message)
         
