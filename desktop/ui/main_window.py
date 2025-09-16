@@ -199,9 +199,9 @@ class MainWindow(QMainWindow):
         
         # 테이블 생성
         self.news_table = QTableWidget()
-        self.news_table.setColumnCount(7)
+        self.news_table.setColumnCount(9)
         self.news_table.setHorizontalHeaderLabels([
-            "카테고리", "기사 제목", "기사 내용", "원본 URL", "블로그 포스팅", "블로그 URL", "기사 발행일"
+            "카테고리", "기사 제목", "기사 내용", "기자명", "기자 email", "원본 URL", "블로그 포스팅", "블로그 URL", "기사 발행일"
         ])
         
         # 테이블 헤더 설정
@@ -209,10 +209,12 @@ class MainWindow(QMainWindow):
         header.setSectionResizeMode(0, QHeaderView.ResizeToContents)  # 카테고리
         header.setSectionResizeMode(1, QHeaderView.Stretch)  # 기사 제목
         header.setSectionResizeMode(2, QHeaderView.Stretch)  # 기사 내용
-        header.setSectionResizeMode(3, QHeaderView.ResizeToContents)  # 원본 URL
-        header.setSectionResizeMode(4, QHeaderView.ResizeToContents)  # 블로그 포스팅
-        header.setSectionResizeMode(5, QHeaderView.ResizeToContents)  # 블로그 URL
-        header.setSectionResizeMode(6, QHeaderView.ResizeToContents)  # 기사 발행일
+        header.setSectionResizeMode(3, QHeaderView.ResizeToContents)  # 기자명
+        header.setSectionResizeMode(4, QHeaderView.ResizeToContents)  # 기자 email
+        header.setSectionResizeMode(5, QHeaderView.ResizeToContents)  # 원본 URL
+        header.setSectionResizeMode(6, QHeaderView.ResizeToContents)  # 블로그 포스팅
+        header.setSectionResizeMode(7, QHeaderView.ResizeToContents)  # 블로그 URL
+        header.setSectionResizeMode(8, QHeaderView.ResizeToContents)  # 기사 발행일
         
         # 테이블 스타일 설정
         self.news_table.setAlternatingRowColors(True)
@@ -357,14 +359,16 @@ class MainWindow(QMainWindow):
             self.news_table.setItem(i, 0, QTableWidgetItem(news.get('category', '')))
             self.news_table.setItem(i, 1, QTableWidgetItem(news.get('title', '')))
             self.news_table.setItem(i, 2, QTableWidgetItem(news.get('content', '')))
-            self.news_table.setItem(i, 3, QTableWidgetItem(news.get('url', '')))
+            self.news_table.setItem(i, 3, QTableWidgetItem(news.get('author', '')))
+            self.news_table.setItem(i, 4, QTableWidgetItem(news.get('email', '')))
+            self.news_table.setItem(i, 5, QTableWidgetItem(news.get('url', '')))
             
             # 블로그 포스팅 상태 표시
             posted_status = "✅ 완료" if news.get('posted_to_blog') else "❌ 대기"
-            self.news_table.setItem(i, 4, QTableWidgetItem(posted_status))
+            self.news_table.setItem(i, 6, QTableWidgetItem(posted_status))
             
-            self.news_table.setItem(i, 5, QTableWidgetItem(news.get('blog_url', '')))
-            self.news_table.setItem(i, 6, QTableWidgetItem(news.get('published_date', '')))
+            self.news_table.setItem(i, 7, QTableWidgetItem(news.get('blog_url', '')))
+            self.news_table.setItem(i, 8, QTableWidgetItem(news.get('published_date', '')))
     
     def update_status(self):
         """상태바 업데이트"""
